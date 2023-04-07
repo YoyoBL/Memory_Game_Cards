@@ -1,82 +1,82 @@
 const cardsStock = [
    {
-      id: "Travelv201",
+      id: "Travel201",
       isFlipped: false,
    },
    {
-      id: "Travelv202",
+      id: "Travel202",
       isFlipped: false,
    },
    {
-      id: "Travelv203",
+      id: "Travel203",
       isFlipped: false,
    },
    {
-      id: "Travelv204",
+      id: "Travel204",
       isFlipped: false,
    },
    {
-      id: "Travelv205",
+      id: "Travel205",
       isFlipped: false,
    },
    {
-      id: "Travelv206",
+      id: "Travel206",
       isFlipped: false,
    },
    {
-      id: "Travelv207",
+      id: "Travel207",
       isFlipped: false,
    },
    {
-      id: "Travelv208",
+      id: "Travel208",
       isFlipped: false,
    },
    {
-      id: "Travelv209",
+      id: "Travel209",
       isFlipped: false,
    },
    {
-      id: "Travelv210",
+      id: "Travel210",
       isFlipped: false,
    },
    {
-      id: "Travelv301",
+      id: "Travel301",
       isFlipped: false,
    },
    {
-      id: "Travelv302",
+      id: "Travel302",
       isFlipped: false,
    },
    {
-      id: "Travelv303",
+      id: "Travel303",
       isFlipped: false,
    },
    {
-      id: "Travelv304",
+      id: "Travel304",
       isFlipped: false,
    },
    {
-      id: "Travelv305",
+      id: "Travel305",
       isFlipped: false,
    },
    {
-      id: "Travelv306",
+      id: "Travel306",
       isFlipped: false,
    },
    {
-      id: "Travelv307",
+      id: "Travel307",
       isFlipped: false,
    },
    {
-      id: "Travelv308",
+      id: "Travel308",
       isFlipped: false,
    },
    {
-      id: "Travelv309",
+      id: "Travel309",
       isFlipped: false,
    },
    {
-      id: "Travelv310",
+      id: "Travel310",
       isFlipped: false,
    },
 ];
@@ -168,11 +168,10 @@ function handleDifficultyLevel(key, num) {
 function renderCardToHtml(index) {
    if (activeCards[index].isFlipped) {
       return `
-        <img src="./Cards/Card_BG.jpg" class="rounded-3 shadow-sm" />
                   <img
-                     src="./Cards/${activeCards[index].id}.png"
+                     src="./Cards/${activeCards[index].id}.jpg"
                      alt=""
-                     class="card-picture"
+                     class="rounded-3 shadow-sm"
                   />
         `;
    }
