@@ -13,6 +13,9 @@ body {
    .game-card {
       max-width: 80px;
    }
+   .row > * {
+      padding: 0%;
+   }
 }
 
 .game-card > img {
@@ -21,11 +24,6 @@ body {
 }
 .difficulty-level {
    background-color: #ffffff;
-}
-
-.row > .col {
-   display: flex;
-   justify-content: center;
 }
 
 .container {
