@@ -24,9 +24,9 @@
       <title>Cards memory game</title>
    </head>
    <body class="center-all">
-      <div class="container mt-3 center-all">
+      <div class="container col-lg-8 mt-3 center-all">
          <!-- Cards -->
-         <div id="game-area" class="row mb-3 center-all"></div>
+         <div id="game-area" class="row mb-3 center-all g-3"></div>
 
          <!-- Difficulty level -->
          <div
@@ -37,19 +37,19 @@
                Difficulty level
             </h4>
             <button
-               onclick="handleDifficultyLevel('easy',4)"
+               onclick="handleDifficultyLevel('easy')"
                class="btn btn-info mb-2 w-50"
             >
                Easy : 4X4
             </button>
             <button
-               onclick="handleDifficultyLevel('medium',5)"
+               onclick="handleDifficultyLevel('medium')"
                class="btn btn-info mb-2 w-50"
             >
                Medium : 5X5
             </button>
             <button
-               onclick="handleDifficultyLevel('hard',6)"
+               onclick="handleDifficultyLevel('hard')"
                class="btn btn-info w-50"
             >
                Hard : 6X6

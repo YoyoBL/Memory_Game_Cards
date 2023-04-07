@@ -87,7 +87,7 @@ const matchedCards = [];
 
 const difficultyLevels = {
    easy: 16,
-   medium: 25,
+   medium: 24,
    hard: 36,
 };
 
@@ -158,57 +158,59 @@ const $playArea = document.getElementById("game-area");
 const $difficultyLevels = document.querySelector(".difficulty-level");
 let $cards = "";
 
-function handleDifficultyLevel(key, num) {
+function handleDifficultyLevel(key) {
    $difficultyLevels.classList.add("d-none");
    chooseDifficulty(key);
 
-   renderGame(num);
+   renderGame(difficultyLevels[key]);
 }
 
 function renderCardToHtml(index) {
    if (activeCards[index].isFlipped) {
       return `
-                  <img
-                     src="./Cards/${activeCards[index].id}.jpg"
-                     alt=""
-                     class="rounded-3 shadow-sm"
-                  />
+         <img
+          src="./Cards/${activeCards[index].id}.jpg"
+          class="rounded-3 shadow-sm"           
+                   />
         `;
    }
    return `
        <img
           src="./Cards/Card_Back.jpg"
           alt="Back of cards"
-          class="rounded-3  shadow-sm"
+          class="rounded-3 shadow-sm"
        />
     </div>
  </div>
     `;
 }
 
-function renderGame(numOfRows) {
+function handleCardsSize(num) {
+   if (num === 16) {
+      return "col-sm-3";
+   }
+   return "col-sm-2";
+}
+
+function renderGame(numOfCards) {
    //    debugger;
    let html = "";
    let cardsCounter = 0;
-   for (let i = 0; i < numOfRows; i++) {
+
+   for (let k = 0; k < numOfCards; k++) {
       html += `
-      <div class="row">
-      `;
-      for (let k = 0; k < numOfRows; k++) {
-         html += `
-         <div class="col">
+         <div class="col ${handleCardsSize(numOfCards)} center-all">
          <div onclick="handleRenderFlipCard(${
             (activeCards, cardsCounter)
          })" class="game-card">
          ${renderCardToHtml(cardsCounter)}`;
-         cardsCounter++;
-      }
-      html += `
-      </div>
+      cardsCounter++;
+   }
+   html += `
       </div>
       </div>
       `;
-   }
+
    $playArea.innerHTML = html;
    $cards = document.querySelectorAll(".game-card");
 }
