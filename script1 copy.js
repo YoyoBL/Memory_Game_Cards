@@ -173,7 +173,7 @@ function renderCardToHtml(index) {
       src="./Cards/${activeCards[index].id}.jpg"
       class="rounded-3 shadow-sm"           
         />`,
-      100
+      500
    )}      
          <img
          src="./Cards/Card_Back.jpg"
