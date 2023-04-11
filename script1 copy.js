@@ -188,7 +188,6 @@ function handleCardsSize(num) {
 }
 
 function renderGame(numOfCards) {
-   //    debugger;
    let html = "";
    let cardsCounter = 0;
 
