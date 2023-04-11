@@ -167,10 +167,14 @@ function handleDifficultyLevel(key) {
 
 function renderCardToHtml(index) {
    return `
-         <img
-          src="./Cards/${activeCards[index].id}.jpg"
-          class="rounded-3 shadow-sm"           
-            />
+   ${setTimeout(
+      () =>
+         `<img
+      src="./Cards/${activeCards[index].id}.jpg"
+      class="rounded-3 shadow-sm"           
+        />`,
+      100
+   )}      
          <img
          src="./Cards/Card_Back.jpg"
          alt="Back of cards"

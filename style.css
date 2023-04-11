@@ -27,6 +27,7 @@ body {
 .game-cards {
    position: absolute;
    left: 0%;
+   z-index: 2;
 }
 .difficulty-level {
    background-color: #ffffff;
