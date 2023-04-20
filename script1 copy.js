@@ -168,15 +168,15 @@ function handleDifficultyLevel(key) {
 function renderCardToHtml(index) {
    return `
          <img
+         src="./Cards/Card_Back.jpg"
+         alt="Back of cards"
+         class="game-cards rounded-3 shadow-sm"
+         />
+         <img
           src="./Cards/${activeCards[index].id}.jpg"
           class="rounded-3 shadow-sm"           
             />
            
-         <img
-         src="./Cards/Card_Back.jpg"
-         alt="Back of cards"
-         class="game-cards rounded-3 shadow-sm"
-           />
         `;
 }
 
