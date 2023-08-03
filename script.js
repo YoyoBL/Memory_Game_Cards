@@ -1,82 +1,82 @@
 const cardsStock = [
    {
-      id: "travelv201",
+      id: "Travel201",
       isFlipped: false,
    },
    {
-      id: "travelv202",
+      id: "Travel202",
       isFlipped: false,
    },
    {
-      id: "travelv203",
+      id: "Travel203",
       isFlipped: false,
    },
    {
-      id: "travelv204",
+      id: "Travel204",
       isFlipped: false,
    },
    {
-      id: "travelv205",
+      id: "Travel205",
       isFlipped: false,
    },
    {
-      id: "travelv206",
+      id: "Travel206",
       isFlipped: false,
    },
    {
-      id: "travelv207",
+      id: "Travel207",
       isFlipped: false,
    },
    {
-      id: "travelv208",
+      id: "Travel208",
       isFlipped: false,
    },
    {
-      id: "travelv209",
+      id: "Travel209",
       isFlipped: false,
    },
    {
-      id: "travelv210",
+      id: "Travel210",
       isFlipped: false,
    },
    {
-      id: "travelv301",
+      id: "Travel301",
       isFlipped: false,
    },
    {
-      id: "travelv302",
+      id: "Travel302",
       isFlipped: false,
    },
    {
-      id: "travelv303",
+      id: "Travel303",
       isFlipped: false,
    },
    {
-      id: "travelv304",
+      id: "Travel304",
       isFlipped: false,
    },
    {
-      id: "travelv305",
+      id: "Travel305",
       isFlipped: false,
    },
    {
-      id: "travelv306",
+      id: "Travel306",
       isFlipped: false,
    },
    {
-      id: "travelv307",
+      id: "Travel307",
       isFlipped: false,
    },
    {
-      id: "travelv308",
+      id: "Travel308",
       isFlipped: false,
    },
    {
-      id: "travelv309",
+      id: "Travel309",
       isFlipped: false,
    },
    {
-      id: "travelv310",
+      id: "Travel310",
       isFlipped: false,
    },
 ];
@@ -87,13 +87,14 @@ const matchedCards = [];
 
 const difficultyLevels = {
    easy: 16,
-   medium: 25,
+   medium: 24,
    hard: 36,
 };
 
-let turnCounter = 0;
+let currentFlippedCards = [];
+let currentFlippedCardsIndex = [];
 
-let cardsFlippedIndexes = [];
+//DATA
 
 function chooseDifficulty(key) {
    if (!difficultyLevels[key]) {
@@ -105,12 +106,13 @@ function chooseDifficulty(key) {
 }
 
 function generateCards(numOfCards) {
+   shuffleCards(cardsStock);
+
    for (let i = 0; i < numOfCards / 2; i++) {
       activeCards.push({ ...cardsStock[i] });
       activeCards.push({ ...cardsStock[i] });
    }
    shuffleCards(activeCards);
-   return activeCards;
 }
 
 function shuffleCards(array) {
@@ -120,41 +122,29 @@ function shuffleCards(array) {
    }
 }
 
-function flipCard(index) {
-   turnCounter++;
-   activeCards[index].isFlipped = !activeCards[index].isFlipped;
-
-   return activeCards[index].isFlipped;
+function flipCard(arr, index) {
+   arr[index].isFlipped = !arr[index].isFlipped;
 }
 
-function cardMatchCheck() {
-   let flippedCards = activeCards.filter((e) => e.isFlipped);
-   if (flippedCards.every((e) => e.id === flippedCards[0].id)) {
-      lockMatchedCards(activeCards);
+function handleFlipCard(index) {
+   flipCard(activeCards, index);
+   currentFlippedCards.push(activeCards[index]);
+   currentFlippedCardsIndex.push(index);
+}
+
+function checkCardsMatch() {
+   if (currentFlippedCards[0].id === currentFlippedCards[1].id) {
+      matchedCards.push(currentFlippedCards);
+      resetCurrentFlipped();
       return true;
    }
+
+   return false;
 }
 
-function resetFlippedCards() {
-   activeCards.forEach((e) => {
-      if (e.isFlipped) {
-         e.isFlipped = !e.isFlipped;
-      }
-   });
-}
-
-function lockMatchedCards(array) {
-   array.forEach((e, i) => {
-      if (e.isFlipped) {
-         matchedCards.push(e);
-         //  array.splice(i, 1);
-      }
-      if (activeCards.length === 0) {
-         declareWin();
-         return;
-      }
-   });
-   return matchedCards;
+function resetCurrentFlipped() {
+   currentFlippedCards = [];
+   currentFlippedCardsIndex = [];
 }
 
 function declareWin() {
@@ -165,81 +155,86 @@ function declareWin() {
 //RENDER
 
 const $playArea = document.getElementById("game-area");
+const $difficultyLevels = document.querySelector(".difficulty-level");
 let $cards = "";
 
-function renderDifficultyLevel() {}
+function handleDifficultyLevel(key) {
+   $difficultyLevels.classList.add("d-none");
+   chooseDifficulty(key);
+
+   renderGame(difficultyLevels[key]);
+}
 
 function renderCardToHtml(index) {
    return `
-    <div class="col">
-    <div onclick="renderFlipCard(${index})" class="game-card">
-       <img
-          src="./Cards/Card_Back.jpg"
-          alt="Back of cards"
-          class="rounded-3"
-       />
-    </div>
- </div>
-    `;
+         <img
+         src="./Cards/Card_Back.jpg"
+         alt="Back of cards"
+         class="game-cards rounded-3 shadow-sm"
+         />
+         <img
+          src="./Cards/${activeCards[index].id}.jpg"
+          class="rounded-3 shadow-sm"           
+            />
+           
+        `;
 }
 
-function renderCardsToHtml(numOfRows) {
-   //    debugger;
+function handleCardsSize(num) {
+   if (num === 16) {
+      return "col-sm-3";
+   }
+   return "col-sm-2";
+}
+
+function renderGame(numOfCards) {
    let html = "";
    let cardsCounter = 0;
-   for (let i = 0; i < numOfRows; i++) {
+
+   for (let k = 0; k < numOfCards; k++) {
       html += `
-      <div class="row mb-3">
-      `;
-      for (let k = 0; k < numOfRows; k++) {
-         html += renderCardToHtml(cardsCounter);
-         cardsCounter++;
-      }
-      html += `
+         <div class="col ${handleCardsSize(numOfCards)} center-all">
+         <div onclick="handleRenderFlipCard(${
+            (activeCards, cardsCounter)
+         })" class="game-card">
+         ${renderCardToHtml(cardsCounter)}
+      </div>
       </div>
       `;
+      cardsCounter++;
    }
+
    $playArea.innerHTML = html;
-   $cards = document.querySelectorAll(".game-card");
-   return $cards;
+   $cards = document.querySelectorAll(".game-cards");
 }
 
 function renderFlipCard(index) {
-   flipCard(index);
-   cardsFlippedIndexes.push(index);
+   handleFlipCard(index);
+   $cards[index].classList.toggle("d-none");
+}
 
-   $cards[index].innerHTML = `
-   <img src="./Cards/Card_BG.jpg" alt="" />
-                  <img
-                     src="./Cards/${activeCards[index].id}.png"
-                     alt=""
-                     class="card-picture"
-                  />
-                  `;
-   if (turnCounter === 2) {
-      let result = cardMatchCheck();
+function handleRenderFlipCard(index) {
+   if (currentFlippedCards.length === 0 || currentFlippedCards.length < 2) {
+      if (!activeCards[index].isFlipped) {
+         renderFlipCard(index);
 
-      if (!result) {
-         setTimeout(() => renderResetFlippedCards(), 2000);
+         if (currentFlippedCards.length === 2) {
+            //   debugger;
+
+            if (checkCardsMatch()) {
+               if (matchedCards.length === activeCards.length / 2) {
+                  return setTimeout(() => declareWin(), 200);
+               }
+               return;
+            }
+            setTimeout(() => {
+               renderFlipCard(currentFlippedCardsIndex[0]);
+               renderFlipCard(currentFlippedCardsIndex[1]);
+
+               resetCurrentFlipped();
+               return matchedCards;
+            }, 1000);
+         }
       }
-      cardsFlippedIndexes = [];
-      turnCounter = 0;
    }
 }
-
-function renderResetFlippedCards() {
-   resetFlippedCards();
-   for (let cardIndex of cardsFlippedIndexes) {
-      $cards[cardIndex].innerHTML = `
-    <img
-    src="./Cards/Card_Back.jpg"
-    alt="Back of cards"
-    class="rounded-3"
- />
-    `;
-   }
-   cardsFlippedIndexes = [];
-}
-
-chooseDifficulty("easy");
-renderCardsToHtml(4);
